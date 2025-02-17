@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import ccxt from 'ccxt';
+import { ConfigService } from '@nestjs/config';
+import * as ccxt from 'ccxt';
+
 
 @Injectable()
 export class TradingService {
   private exchange: ccxt.Exchange;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.exchange = new ccxt.binance({
-      apiKey: 'YOUR_API_KEY',
-      secret: 'YOUR_API_SECRET',
+      apiKey: this.configService.get<string>('BINANCE_API_KEY'),
+      secret: this.configService.get<string>('BINANCE_API_SECRET'),
     });
   }
 
