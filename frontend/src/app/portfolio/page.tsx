@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import apiClient from '@/lib/api/client';
+import socket from '@/lib/api/socket';
 
 export default function PortfolioPage() {
   const [portfolio, setPortfolio] = useState<any[]>([]);
@@ -16,6 +17,14 @@ export default function PortfolioPage() {
       }
     };
     fetchPortfolio();
+
+    socket.on('portfolioUpdate', (data) => {
+      setPortfolio(data);
+    });
+
+    return () => {
+      socket.off('portfolioUpdate');
+    };
   }, []);
 
   return (

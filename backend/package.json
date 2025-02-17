@@ -26,6 +26,8 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-socket.io": "^11.0.10",
+    "@nestjs/websockets": "^11.0.10",
     "bcryptjs": "^3.0.1",
     "ccxt": "^4.4.60",
     "passport": "^0.7.0",
