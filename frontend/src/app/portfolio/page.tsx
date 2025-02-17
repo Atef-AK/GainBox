@@ -12,8 +12,8 @@ export default function PortfolioPage() {
       try {
         const response = await apiClient.get('/portfolio');
         setPortfolio(response.data);
-      } catch (error) {
-        console.error('Failed to fetch portfolio:', error);
+      } catch (err) {
+        console.error('Failed to fetch portfolio:', err);
       }
     };
     fetchPortfolio();

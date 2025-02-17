@@ -1,20 +1,17 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { data: session, status } = useSession();
   const router = useRouter();
 
-  if (status === 'loading') {
-    return <p>Loading...</p>;
-  }
-
-  if (!session) {
-    router.push('/auth/login');
-    return null;
-  }
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      router.push('/auth/login');
+    }
+  }, [router]);
 
   return <>{children}</>;
 }

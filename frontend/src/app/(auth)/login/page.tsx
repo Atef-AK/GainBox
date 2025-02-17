@@ -1,20 +1,23 @@
-'use client'; // Mark this as a Client Component
+'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import apiClient from '@/lib/api/client';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await apiClient.post('/auth/login', { email, password });
-      console.log('Login successful:', response.data);
-      // Redirect to dashboard
-    } catch (error) {
-      console.error('Login failed:', error);
+      localStorage.setItem('access_token', response.data.access_token);
+      router.push('/dashboard');
+    } catch (err) {
+      setError('Invalid email or password');
     }
   };
 
@@ -38,6 +41,7 @@ export default function LoginPage() {
         />
         <button type="submit">Login</button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
